@@ -35,7 +35,7 @@ def main():
                     match_end = starting_index + pos - 1 # Match ended in last iteration
                     print_match(id, match_start, match_end)
                     match_start = None
-        # Every line ends with a newline target_character, so the else body above
+        # Every line ends with a newline character, so the else body above
         # will always close out a match
 
 
