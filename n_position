@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+
+import sys
+import argparse
+
+def print_match(id, match_start, match_end):
+    if match_start == match_end:
+        print("%s\t%d" % (id, match_start))
+    else:
+        print("%s\t%d-%d" % (id, match_start, match_end))
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("target_character", help="Which character to locate")
+    parser.add_argument("starting_index", type=int, help="Starting index, either 0 or 1")
+    args = parser.parse_args()
+    target_character = args.target_character
+    starting_index = args.starting_index
+    assert len(target_character) == 1 and target_character != "\n", target_character
+    assert starting_index >= 0, starting_index
+
+    for line in sys.stdin:
+        assert line.endswith("\n")
+        id, _, sequence = line.split("\t")
+        match_start = None
+        for pos, char in enumerate(sequence):
+            if char == target_character:
+                if match_start is None:
+                    match_start = starting_index + pos
+            else:
+                # Close the match if one was open
+                if match_start is not None:
+                    match_end = starting_index + pos - 1 # Match ended in last iteration
+                    print_match(id, match_start, match_end)
+                    match_start = None
+        # Every line ends with a newline target_character, so the else body above
+        # will always close out a match
+
+
+if __name__ == "__main__":
+    main()
