@@ -6,7 +6,7 @@ import sys
 import argparse
 
 def print_match(id, match_start, match_end):
-    # both match_start and match_end are inclusive
+    # Both match_start and match_end are inclusive
     n_length = match_end - match_start + 1
     if match_start == match_end:
         print("%s\t%d\t%d" % (id, n_length, match_start))
